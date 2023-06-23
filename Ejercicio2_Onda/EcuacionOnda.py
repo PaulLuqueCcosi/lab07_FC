@@ -43,7 +43,7 @@ def g(x):
     # return 0
 
 # Ecuacion de la onda
-def onda(f, g, long_onda, tiempo_evaluar, velocidad, h, k, condicion_frontera_inicio = alfa, condicion_frontera_final = beta, log = False):
+def ecuacion_onda(f, g, long_onda, tiempo_evaluar, velocidad, h, k, condicion_frontera_inicio = alfa, condicion_frontera_final = beta, log = False):
     # f : condicion inicial : posicion
     # g : condicion inicial : velocidad
     # velocidad : velocidad de propagacion de la onda
@@ -69,6 +69,10 @@ def onda(f, g, long_onda, tiempo_evaluar, velocidad, h, k, condicion_frontera_in
     
     if(r > 1):
         print("Warning: R inestable")
+        print(f"con v: {velocidad}, k : {k}")
+        condicion = velocidad*k
+        print(f"h > {condicion}")
+        exit()
     
     # condicion inicial
     U[:,0] = f(x)
@@ -128,17 +132,17 @@ def ejemplo_con_log():
     h = 0.3
     k = 0.1
 
-    onda(f,g,a,b,v,h,k, log=True)
+    ecuacion_onda(f,g,a,b,v,h,k, log=True)
 
 
 def ejemplo():
     # Parámetros
-    v = 2
-    a = 1
-    b = 1
+    velocidad = 2
+    long = 1
+    tiempo = 1
     h = 0.03
     k = 0.01
 
-    onda(f,g,a,b,v,h,k)
+    ecuacion_onda(f,g,long,tiempo,velocidad,h,k)
 
 ejemplo()
