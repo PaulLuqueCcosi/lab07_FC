@@ -2,6 +2,47 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+
+def imprimir_solucion(u, x, t):
+    nx = len(x)
+    nt = len(t)
+
+    for j in range(nt):
+        print(f"t = {t[j]}:")
+        for i in range(nx):
+            print(f"x = {x[i]} | u(x,t) = {u[i, j]}")
+
+        print()
+
+def imprimir_matriz(u, x, t):
+    nx = len(x)
+    nt = len(t)
+
+    # Voltear y rotar la matriz correctamente
+    matriz_rotada = np.rot90(u, k=1)
+
+    # Imprimir la matriz con etiquetas en los ejes y colores
+    print("Matriz de solución:")
+    print('Horizontal : x\nVertical : t\n')
+
+    for j in range(nt):
+        print(f"{t[(-1*(j+1))]: <8.2f}", end="")
+        for i in range(nx):
+            valor = matriz_rotada[j, i]
+            color = '\033[92m'
+            print(f"{color}{valor: <8.4f}\033[0m", end="")
+        print()
+    print('\t', end="")
+    for i in range(nx):
+        print(f"{x[i]: <8.2f}", end="")
+    print()
+
+
+
+
+
+
+        
 def heat_equation(f, alfa, beta, a, b, c, h, k):
     # f=u(x,0) es la condición inicial
     # alfa=u(0,t) y beta=u(a,t) condiciones en la frontera
@@ -27,11 +68,13 @@ def heat_equation(f, alfa, beta, a, b, c, h, k):
     u[-1, :] = beta(t)
 
     # Iteración para calcular la solución
-    for j in range(1, nt - 1):
+    for j in range(1, nt):
         for i in range(1, nx - 1):
             u[i, j] = u[i, j-1] + c * k / h**2 * (u[i + 1, j-1] - 2 * u[i, j-1] + u[i - 1, j-1])
 
-    print(u)
+    imprimir_solucion(u, x, t)
+    
+    imprimir_matriz(u,x,t)
     # Crear malla de puntos para el gráfico 3D
     X, T = np.meshgrid(t, x)
 
