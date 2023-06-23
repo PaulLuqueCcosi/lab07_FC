@@ -106,7 +106,7 @@ def beta(t):
 a = 2
 b = 0.2
 c = 1
-h = 0.2
-k = 0.02
+h = 0.5
+k = 0.2
 
 heat_equation(f, alfa, beta, a, b, c, h, k)
