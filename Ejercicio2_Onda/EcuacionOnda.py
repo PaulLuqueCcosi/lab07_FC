@@ -65,7 +65,8 @@ def onda(f, g, a, b, v, h, k, alfa = alfa, beta = beta):
     
     # Crear una matriz para almacenar la solución numérica
     U = np.zeros((nx, nt))
-    
+    print("Solo ceros")
+    imprimir_matriz(U,x,t)
     
     # r es el cálculo para la condición de estabilidad
     r = v * k / h
@@ -73,18 +74,30 @@ def onda(f, g, a, b, v, h, k, alfa = alfa, beta = beta):
     # condicion inicial
     U[:,0] = f(x)
     
+    print("Condiciones Iniciales")
+    imprimir_matriz(U,x,t)
+    
     # Condiciones de frontera
     U[0, :] = alfa(t)
     U[-1, :] = beta(t)
-
+    
+    print("COndiciones de frontera")
+    imprimir_matriz(U,x,t)
+    
     # Cálculo de las segunda  filas
     for i in range(1, nx - 1):
+        print(f"i: {i}")
         U[i, 1] = 2*(1 - r**2) * f(h * (i - 1)) + k * g(h * (i - 1)) + r**2/2.0 * (f(h * i) + f(h * (i - 2)))
+
+    print("Calculo de la segunda fila")
+    imprimir_matriz(U,x,t)
 
     # Cálculo a partir de la tercera fila
     for j in range(1, nt - 1):
         for i in range(1, nx - 1):
             U[i, j+1] = 2*(1-r**2) * U[i, j] + r**2 * (U[i+1, j] + U[i - 1, j]) - U[i, j-1]
+            print(f"i : {i} j : {j+1}")
+            imprimir_matriz(U,x,t)
 
     # # Crear las matrices de espacio y tiempo para la gráfica 3D
     # espacio = np.linspace(0, a, num_pasos_espacio)
@@ -102,7 +115,7 @@ def onda(f, g, a, b, v, h, k, alfa = alfa, beta = beta):
 
     # return U
     # imprimir_solucion(U, x, t)
-    
+    print("Matriz calculada")
     imprimir_matriz(U,x,t)
     # Crear malla de puntos para el gráfico 3D
     X, T = np.meshgrid(t, x)
@@ -120,7 +133,7 @@ def onda(f, g, a, b, v, h, k, alfa = alfa, beta = beta):
     ax.set_zlabel('Temperatura')
 
     # Mostrar el gráfico 3D
-    plt.show()
+    # plt.show()
 
        
 # Definir las condiciones iniciales
