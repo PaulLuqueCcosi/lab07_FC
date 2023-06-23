@@ -27,9 +27,9 @@ def heat_equation(f, alfa, beta, a, b, c, h, k):
     u[-1, :] = beta(t)
 
     # Iteración para calcular la solución
-    for j in range(0, nt - 1):
+    for j in range(1, nt - 1):
         for i in range(1, nx - 1):
-            u[i, j + 1] = u[i, j] + c * k / h**2 * (u[i + 1, j] - 2 * u[i, j] + u[i - 1, j])
+            u[i, j] = u[i, j-1] + c * k / h**2 * (u[i + 1, j-1] - 2 * u[i, j-1] + u[i - 1, j-1])
 
     print(u)
     # Crear malla de puntos para el gráfico 3D
